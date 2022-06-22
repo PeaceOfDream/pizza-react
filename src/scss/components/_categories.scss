@@ -26,6 +26,18 @@
         background-color: #282828;
         color: #fff;
       }
+
+		@media (max-width: 1020px) {
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 570px) {
+        padding: 13px 20px;
+      }
+
+		 @media (max-width: 460px) {
+        padding: 13px 7px;
+      }
     }
   }
 }
