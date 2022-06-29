@@ -1,5 +1,4 @@
 import { useContext, useRef} from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { Categories } from '../components/Categories';
@@ -11,21 +10,21 @@ import { Pagination } from '../Pagination';
 import { searchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 
 export const Home = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const { categoryId, currentPage } = useSelector((state) => state.filter);
-	const isSearch = useRef(false)
 	const sortProperty = useSelector((state) => state.filter.sort.sortProperty);
+	const {items, status} = useSelector((state) => state.pizza);
+	const isSearch = useRef(false)
 	const isMounted = useRef(false)
 
 	
 
 	const {searchValue} = useContext(searchContext)
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const onChangeCategory = (id) => {
 	dispatch(setCategoryId(id))
@@ -35,22 +34,23 @@ export const Home = () => {
 	dispatch(setCurrentPage(number));
   }
 
-  const fetchPizzas = () => {
-		setIsLoading(true);
-
+  const getPizzas = async () => {
     const sortBy = sortProperty.replace('-', '');
     const order = sortProperty.includes('-') ? 'asc' : 'desc';
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    axios
-      .get(
-        `https://62b20abe20cad3685c886056.mockapi.io/items?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+dispatch(
+  fetchPizzas({
+    sortBy,
+    order,
+    category,
+    search,
+    currentPage,
+  }),
+);
+
+
 
   }
 
@@ -80,7 +80,7 @@ export const Home = () => {
 
   useEffect(() => {
    if (!isSearch.current) {
-		fetchPizzas();
+		getPizzas();
 	} 
 	isSearch.current = false
 
@@ -114,7 +114,16 @@ export const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>
+            Ошибка <span>😕</span>
+          </h2>
+          <p>Не удалось получить пиццы</p>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );

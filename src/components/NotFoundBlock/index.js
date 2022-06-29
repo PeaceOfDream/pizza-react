@@ -6,11 +6,11 @@ export const NotFoundBlock = () => {
   return (
     <div className={styles.root}>
       <h1>
-        <span>:D</span>
+        <span>😕</span>
         <br />
         Ничего не найдено
       </h1>
-      
+
       <p className={styles.description}>
         description description description description description description description
       </p>
