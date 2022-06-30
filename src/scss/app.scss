@@ -89,6 +89,10 @@ body {
    
 }
 
+.cood {
+	background-color: red;
+}
+
 .container {
   width: $container-width;
   margin: 0 auto;
@@ -99,6 +103,11 @@ body {
     .content__title {
       margin: 0;
     }
+  }
+  .pizza-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
   }
 }
 
