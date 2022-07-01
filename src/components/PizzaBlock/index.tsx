@@ -1,31 +1,43 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {addItem, selectCartItemById} from '../../redux/slices/cartSlice'
+import {addItem, CartItem, selectCartItemById} from '../../redux/slices/cartSlice'
+
+
+interface PizzaBlockProps {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+}
 
 
 const typeNames = ['тонкое', "традиционное"];
 
-export function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
-	const dispatch = useDispatch()
-	const cartItem = useSelector(selectCartItemById(id));
-	const [activeType, setActiveType] = useState(0)
-	const [activeSize, setActiveSize] = useState(0)
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+  const dispatch = useDispatch();
+  const cartItem = useSelector(selectCartItemById(id));
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
 
-	const addedCount = cartItem ? cartItem.count : ''
-	
-	const onClickAdd = () => {
-		const item = {
+  const addedCount = cartItem ? cartItem.count : '';
+
+  const onClickAdd = () => {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typeNames[activeType],
       size: sizes[activeSize],
+		count: 0
     };
-		dispatch(addItem(item))
-	}
+    dispatch(addItem(item));
+  };
 
-	return (
+
+  return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -73,4 +85,4 @@ export function PizzaBlock({id, title, price, imageUrl, sizes, types}) {
       </div>
     </div>
   );
-}
+};

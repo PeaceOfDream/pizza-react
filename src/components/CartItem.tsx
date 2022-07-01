@@ -1,32 +1,35 @@
-import React from 'react'
-import {  useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem} from '../redux/slices/cartSlice';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem, CartItem, minusItem, removeItem } from '../redux/slices/cartSlice';
 
-export const CartItem = ({id, title, type, size, price, count, imageUrl}) => {
+interface CartItemProps {
+  id: string
+  title: string
+  type: string
+  size: number
+  price: number
+  count: number
+  imageUrl: string
+}
 
-	const dispatch = useDispatch()
-	
+export const CartItemBlock: React.FC<CartItemProps> = ({ id, title, type, size, price, count, imageUrl }) => {
+  const dispatch = useDispatch();
 
-	const onClickPlus = () => {
-		dispatch(addItem({
-			id
-		}))
-	}
-
-	const onClickMinus = () => {
+  const onClickPlus = () => {
     dispatch(
-      minusItem(id),
+      addItem({ id } as CartItem),
     );
   };
 
-  const onClickRemove = () => {
-		if (window.confirm('Удалить товар из корзины?')){
-
-			dispatch(removeItem(id));
-		}
+  const onClickMinus = () => {
+    dispatch(minusItem(id));
   };
 
-
+  const onClickRemove = () => {
+    if (window.confirm('Удалить товар из корзины?')) {
+      dispatch(removeItem(id));
+    }
+  };
 
   return (
     <div className="cart__item">
@@ -35,12 +38,13 @@ export const CartItem = ({id, title, type, size, price, count, imageUrl}) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{type}, {size} см.</p>
+        <p>
+          {type}, {size} см.
+        </p>
       </div>
       <div className="cart__item-count">
         <button
           onClick={onClickMinus}
-          disabled=""
           className="button button--outline button--circle cart__item-count-minus">
           <svg
             width="10"
@@ -97,4 +101,4 @@ export const CartItem = ({id, title, type, size, price, count, imageUrl}) => {
       </div>
     </div>
   );
-}
+};
