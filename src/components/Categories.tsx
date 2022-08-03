@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { memo } from "react";
 
 
 interface CategoriesProps {
@@ -12,8 +11,9 @@ interface CategoriesProps {
 
 const categories = ['все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-export const Categories: React.FC<CategoriesProps> = ({ value, onChangeCategory }) => {
+export const Categories: React.FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
 
+	
   return (
     <div className="categories">
       <ul>
@@ -25,4 +25,4 @@ export const Categories: React.FC<CategoriesProps> = ({ value, onChangeCategory 
       </ul>
     </div>
   );
-};
+})

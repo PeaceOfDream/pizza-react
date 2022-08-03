@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {addItem, CartItem, selectCartItemById} from '../../redux/slices/cartSlice'
+import { Link } from 'react-router-dom';
+import { selectCartItemById } from '../../redux/cart/selectors';
+import { addItem } from '../../redux/cart/slice';
+import { CartItem } from '../../redux/cart/types';
 
 
 interface PizzaBlockProps {
@@ -40,8 +43,10 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageU
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <Link key={id} to={`/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
             {types.map((type) => (
