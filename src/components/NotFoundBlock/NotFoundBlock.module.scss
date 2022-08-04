@@ -3,10 +3,15 @@
 	max-width: 750px;
 	margin: 0 auto;
 	text-align: center;
+
+	@media (max-width: 950px) {
+				padding-top: 50px;
+		}
 }
 
-span {
-	// font-size: 54px;
+
+h2 {
+	margin-bottom: 30px;
 }
 
 .description {

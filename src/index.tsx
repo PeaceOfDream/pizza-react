@@ -14,7 +14,7 @@ const rootElem = document.getElementById('root');
 	);
 	root.render(
 	  <Provider store={store}>
-			<BrowserRouter>
+			<BrowserRouter basename='/pizza-react'>
 		
 			  <App />
 		 
