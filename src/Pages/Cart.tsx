@@ -8,7 +8,7 @@ import { clearItems } from '../redux/cart/slice';
 
 
 
-export const Cart:React.FC = () => {
+const Cart:React.FC = () => {
 
 const dispatch = useDispatch();
 const {totalPrice, items}= useSelector(selectCart);
@@ -130,3 +130,4 @@ const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
 };
 
 
+export default Cart

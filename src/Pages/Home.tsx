@@ -1,14 +1,14 @@
-import { useCallback, useRef} from 'react';
-import qs from 'qs';
+import { useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import qs from 'qs';
+
 import { Categories } from '../components/Categories';
 import { SortPopup, sortList } from '../components/Sort';
 import { PizzaBlock } from '../components/PizzaBlock';
-import { useEffect } from 'react';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { Pagination } from '../Pagination';
-import { useSelector } from 'react-redux';
 
+import { useSelector } from 'react-redux';
 import { UseAppDispatch } from '../redux/store';
 import { selectFilter, selectSort } from '../redux/filter/selectors';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';

@@ -10,7 +10,7 @@ interface FullPizzaInt {
 }
 
 
-export const FullPizza: React.FC = () => {
+const FullPizza: React.FC = () => {
   const [pizza, setPizza] = useState<FullPizzaInt>();
 
   const { id } = useParams();
@@ -37,7 +37,7 @@ export const FullPizza: React.FC = () => {
 
   return (
     <div className="container">
-      <img src={pizza.imageUrl} alt={pizza.title} />
+      <img src={pizza.imageUrl} alt={pizza.title} className="pizza-img" />
       <div className="pizza-title">
         <div>
           <h2>{pizza.title}</h2>
@@ -51,3 +51,5 @@ export const FullPizza: React.FC = () => {
     </div>
   );
 };
+
+export default FullPizza
